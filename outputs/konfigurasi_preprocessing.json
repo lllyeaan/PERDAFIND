@@ -1,0 +1,43 @@
+{
+  "versi_preprocessing": "perdafind-tahap2-vscode-1",
+  "sastrawi": "1.0.1",
+  "urutan": [
+    "case_folding",
+    "cleaning",
+    "tokenizing",
+    "stopword_removal",
+    "stemming"
+  ],
+  "case_folding": "Unicode NFKC dan casefold",
+  "cleaning": "gabung pemenggalan baris, hapus URL, angka, simbol dan spasi berlebih",
+  "min_panjang_token": 2,
+  "stopword_source": "Sastrawi, tanpa protected_terms",
+  "protected_terms": [
+    "banyuwangi",
+    "belum",
+    "bukan",
+    "daerah",
+    "dilarang",
+    "hak",
+    "harus",
+    "izin",
+    "jangan",
+    "kabupaten",
+    "kecuali",
+    "larang",
+    "pajak",
+    "peraturan",
+    "perda",
+    "retribusi",
+    "tanpa",
+    "tidak",
+    "wajib"
+  ],
+  "stemming": "Sastrawi StemmerFactory",
+  "catatan": "Gunakan fungsi preprocess_text yang sama untuk query ketika website berjalan",
+  "dataset_sha256": "44232a656d10e8ba932f382b27f9fefcf7f16e9cfd1816037e09888933d1533e",
+  "preprocess_script_sha256_prefix": "668f72623d16",
+  "jumlah_dokumen": 100,
+  "source_column": "isi_dokumen",
+  "target_column": "teks_preprocessed"
+}

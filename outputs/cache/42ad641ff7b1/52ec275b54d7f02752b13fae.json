@@ -1,0 +1,8 @@
+{
+  "jumlah_token_awal": 2586,
+  "jumlah_token_setelah_stopword": 2290,
+  "jumlah_token_final": 2290,
+  "jumlah_term_unik": 510,
+  "panjang_teks_hasil": 14737,
+  "reduksi_token_persen": 11.45
+}
