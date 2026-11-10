@@ -35,8 +35,8 @@
   ],
   "stemming": "Sastrawi StemmerFactory",
   "catatan": "Gunakan fungsi preprocess_text yang sama untuk query ketika website berjalan",
-  "dataset_sha256": "44232a656d10e8ba932f382b27f9fefcf7f16e9cfd1816037e09888933d1533e",
-  "preprocess_script_sha256_prefix": "668f72623d16",
+  "dataset_sha256": "0fbd7b0e14df528979b6a0a20f3bb3af0abf179db161b96319163ba5d29192c3",
+  "preprocess_script_sha256_prefix": "063bbd6fe2a5",
   "jumlah_dokumen": 100,
   "source_column": "isi_dokumen",
   "target_column": "teks_preprocessed"

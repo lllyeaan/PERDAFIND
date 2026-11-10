@@ -1,5 +1,17 @@
-﻿__pycache__/
+﻿# Python cache
+__pycache__/
 *.py[cod]
+
+# Virtual environment
 .venv/
 venv/
+
+# Environment variables
 .env
+
+# Generated TF-IDF artifacts
+outputs/*.npz
+outputs/*.joblib
+
+# Temporary cache
+outputs/cache/
