@@ -1,6 +1,5 @@
 
 import joblib
-import msvcrt
 import numpy as np
 import pandas as pd
 
@@ -134,47 +133,16 @@ def search_perda(
         print("\nQuery tidak menghasilkan vektor TF-IDF.")
         return []
 
-    # Filter AND: memilih dokumen yang mengandung seluruh kata query
-    query_feature_indices = [
-        vectorizer.vocabulary_[term]
-        for term in available_terms
-    ]
-
-    document_term_matrix = tfidf_matrix[:, query_feature_indices]
-
-    matching_mask = np.asarray(
-        (document_term_matrix > 0).sum(axis=1)
-    ).ravel() == len(query_feature_indices)
-
-    matching_indices = np.where(matching_mask)[0]
-
-    print(f"\nJumlah kata query       : {len(available_terms)}")
-    print(f"Jumlah dokumen lolos AND: {len(matching_indices)}")
-
-    if len(matching_indices) == 0:
-        print(
-            "\nTidak ditemukan dokumen yang mengandung "
-            "seluruh kata query."
-        )
-        return []
-
-    # Mengambil matriks dokumen yang lolos filter AND
-    candidate_matrix = tfidf_matrix[matching_indices]
-
-    # Menghitung Cosine Similarity
-    similarity_scores = cosine_sim(
-        query_vector,
-        candidate_matrix
-    ).flatten()
+    # Bandingkan dengan seluruh dokumen agar kecocokan sebagian tetap diranking.
+    similarity_scores = cosine_sim(query_vector, tfidf_matrix).flatten()
 
     # Mengurutkan skor dari tertinggi ke terendah
-    ranked_positions = np.argsort(
+    ranked_indices = np.argsort(
         -similarity_scores,
         kind="stable"
     )
 
-    ranked_indices = matching_indices[ranked_positions]
-    similarity_scores = similarity_scores[ranked_positions]
+    similarity_scores = similarity_scores[ranked_indices]
 
     results = []
 
@@ -230,6 +198,7 @@ def display_results(results):
 
 # 5. Input query dengan tombol ESC
 def get_query():
+    import msvcrt
 
     print(
         "\nMasukkan kata kunci (tekan ESC untuk keluar): ",
