@@ -94,11 +94,7 @@ def search_perda(
     # Preprocessing query
     processed_query = preprocess_text(query)
 
-    print(f"\nQuery asli          : {query}")
-    print(f"Query preprocessing : {processed_query}")
-
     if not processed_query:
-        print("\nQuery tidak menghasilkan token.")
         return []
 
     # Mengambil kata-kata hasil preprocessing
@@ -111,26 +107,13 @@ def search_perda(
     ]
 
     if not available_terms:
-        print(
-            "\nTidak ada kata dalam query yang ditemukan "
-            "pada vocabulary dokumen."
-        )
         return []
-
-    if len(available_terms) < len(query_terms):
-        missing_terms = set(query_terms) - set(available_terms)
-        print(
-            f"\nKata tidak ditemukan dalam vocabulary: "
-            f"{', '.join(sorted(missing_terms))}"
-        )
-        print("Pencarian dilanjutkan menggunakan kata yang tersedia.")
 
     # Mengubah query menjadi vektor TF-IDF
     processed_available_query = " ".join(available_terms)
     query_vector = vectorizer.transform([processed_available_query])
 
     if query_vector.nnz == 0:
-        print("\nQuery tidak menghasilkan vektor TF-IDF.")
         return []
 
     # Bandingkan dengan seluruh dokumen agar kecocokan sebagian tetap diranking.
@@ -146,7 +129,7 @@ def search_perda(
 
     results = []
 
-    # Mengambil seluruh dokumen yang lolos filter AND
+    # Mengambil dokumen relevan dalam urutan skor tertinggi ke terendah
     for index, score in zip(ranked_indices, similarity_scores):
 
         if score <= 0:
