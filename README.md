@@ -161,39 +161,4 @@ menampilkan “PDF belum tersedia”.
 File PDF diabaikan Git karena ukurannya besar. Saat ini koleksi lokal berukuran
 sekitar 1,47 GB; file tersebut harus disediakan secara terpisah saat deployment.
 
-## Deployment di Render
 
-1. Push source code dan `outputs/dataset_perda_untuk_tfidf.csv` ke repository
-   GitHub. Jangan commit PDF besar atau artefak `.npz`/`.joblib`; model dibuat
-   ulang pada proses build.
-2. Di Render, pilih **New → Web Service**, lalu hubungkan repository.
-3. Gunakan konfigurasi berikut:
-
-   | Pengaturan | Nilai |
-   | --- | --- |
-   | Language | Python 3 |
-   | Build Command | `pip install -r requirements.txt && python tfidf.py` |
-   | Start Command | `uvicorn api:app --host 0.0.0.0 --port $PORT` |
-
-4. Tambahkan persistent disk pada layanan berbayar dengan mount path:
-
-   ```text
-   /opt/render/project/src/documents
-   ```
-
-   Path ini sesuai dengan lokasi `documents/` pada layanan Python Render.
-   Pilih ukuran disk yang cukup untuk seluruh PDF dan pertumbuhan berikutnya.
-5. Setelah deploy, salin PDF ke disk tersebut menggunakan transfer file melalui
-   Shell/SCP Render. Pertahankan nama file yang sesuai dengan kolom `path_pdf`.
-6. Buka URL layanan Render dan uji `/health`, pencarian, lalu tombol **Buka
-   dokumen PDF**. Pastikan PDF dikirim sebagai `application/pdf`.
-
-Filesystem layanan Render bersifat sementara tanpa persistent disk, dan paket
-Free tidak mendukung persistent disk. Karena itu, PDF yang disimpan di sana
-tidak cocok untuk layanan Free atau penyimpanan jangka panjang.
-
-Referensi resmi:
-
-- [Deploy FastAPI di Render](https://render.com/docs/deploy-fastapi)
-- [Persistent disk Render](https://render.com/docs/disks)
-- [Batasan layanan Free Render](https://render.com/docs/free)
