@@ -47,6 +47,22 @@ function renderResults(results) {
     appendTextElement(metadata, "span", "", `Nomor ${result.nomor_perda}`);
     appendTextElement(metadata, "span", "", `Tahun ${result.tahun_perda}`);
     content.append(metadata);
+
+    if (result.document_url) {
+      const documentLink = appendTextElement(
+        content,
+        "a",
+        "document-link",
+        "Buka dokumen PDF"
+      );
+      documentLink.href = result.document_url;
+      documentLink.target = "_blank";
+      documentLink.rel = "noopener noreferrer";
+      documentLink.setAttribute("aria-label", `Buka PDF ${result.judul_perda} di tab baru`);
+    } else {
+      appendTextElement(content, "span", "document-unavailable", "PDF belum tersedia");
+    }
+
     item.append(content);
 
     const percent = Math.max(0, Math.min(100, result.similarity * 100));

@@ -406,6 +406,37 @@ h2 {
   font-weight: 500;
 }
 
+.document-link,
+.document-unavailable {
+  display: inline-flex;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.document-link {
+  align-items: center;
+  gap: 6px;
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.document-link::after {
+  content: "↗";
+  font-size: 15px;
+}
+
+.document-link:hover {
+  color: var(--blue-dark);
+  text-decoration: underline;
+}
+
+.document-unavailable {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
 .score {
   display: grid;
   gap: 8px;
