@@ -13,5 +13,8 @@ venv/
 outputs/*.npz
 outputs/*.joblib
 
+# Perda PDF source files
+documents/*.pdf
+
 # Temporary cache
 outputs/cache/
