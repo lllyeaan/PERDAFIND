@@ -1,14 +1,20 @@
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
+from pathlib import Path
 from typing import AsyncIterator, Literal
 
 import pandas as pd
 from fastapi import FastAPI, Request
 from pydantic import BaseModel, Field, field_validator
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from scipy.sparse import csr_matrix
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 from cos_similarity import load_tfidf_artifacts, search_perda
+
+ROOT = Path(__file__).resolve().parent
+STATIC_DIR = ROOT / "static"
 
 
 @dataclass
@@ -35,6 +41,12 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+
+@app.get("/", include_in_schema=False)
+def home() -> FileResponse:
+    return FileResponse(STATIC_DIR / "index.html")
 
 
 class SearchRequest(BaseModel):
